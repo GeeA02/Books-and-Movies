@@ -394,9 +394,8 @@ class _SignInFormState extends State<_SignInForm> {
         SnackBar(
           content: Text('${user.email} signed in'),
         ),
-
-        //TODO navigate to main
       );
+      Navigator.pushReplacementNamed(context, '/main');
     } catch (e) {
       Scaffold.of(context).showSnackBar(
         const SnackBar(
@@ -429,6 +428,8 @@ class _SignInFormState extends State<_SignInForm> {
       Scaffold.of(context).showSnackBar(SnackBar(
         content: Text('Sign In ${user.uid} with Google'),
       ));
+
+      Navigator.pushNamed(context, '/main');
     } catch (e) {
       print(e);
       Scaffold.of(context).showSnackBar(
