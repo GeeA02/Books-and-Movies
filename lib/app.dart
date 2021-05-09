@@ -1,3 +1,6 @@
+import 'package:books_and_movies/view/signInView.dart';
+import 'package:books_and_movies/view/signUpView.dart';
+import 'package:books_and_movies/view/widget/firebaseWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:books_and_movies/theme/config.dart';
 import 'package:books_and_movies/theme/defaultTheme.dart';
@@ -28,7 +31,10 @@ class _AppState extends State {
       //debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => MainView(),
+        '/': (context) => FirebaseWidget(),
+        '/main': (context) => MainView(),
+        '/signIn': (context) => SignInView(),
+        '/signIn/signUp': (context) => SignUpView(),
       },
     );
   }
