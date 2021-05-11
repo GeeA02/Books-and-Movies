@@ -28,6 +28,13 @@ class _SignInViewState extends State<SignInView> {
 
   @override
   void initState() {
+    _auth.authStateChanges().listen((User user) {
+      if (user == null) {
+        print('User is currently signed out!');
+      } else {
+        Navigator.pushNamed(context, '/main');
+      }
+    });
     _auth.userChanges().listen((event) => setState(() => user = event));
     super.initState();
   }
@@ -399,7 +406,7 @@ class _SignInFormState extends State<_SignInForm> {
     } catch (e) {
       Scaffold.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Failed to sign in with Email & Password'),
+          content: Text('Failed to sign in with Email and Password'),
         ),
       );
     }
