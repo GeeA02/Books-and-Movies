@@ -110,7 +110,7 @@ class _SignUpViewState extends State<SignUpView> {
       setState(() {
         _success = true;
         _userEmail = user.email;
-        Navigator.pushReplacementNamed(context, '/main');
+        Navigator.pushReplacementNamed(context, '/main', arguments: user);
       });
     } else {
       _success = false;

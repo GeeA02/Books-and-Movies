@@ -1,85 +1,136 @@
-import 'package:flutter/cupertino.dart';
+import 'package:books_and_movies/view/booksView.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'moviesView.dart';
+
+/// This is the stateful widget that the main application instantiates.
 class MainView extends StatefulWidget {
   MainView({Key key}) : super(key: key);
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
 
   @override
   _MainViewState createState() => _MainViewState();
 }
 
+/// This is the private State class that goes with MyStatefulWidget.
 class _MainViewState extends State<MainView> {
-  int _counter = 0;
+  final User user = FirebaseAuth.instance.currentUser;
 
-  void _incrementCounter() {
+  int _selectedIndex = 0;
+
+  static List<Widget> _widgetOptions = [
+    BooksView(),
+    MoviesView(),
+  ];
+
+  void _onItemTapped(int index) {
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      _selectedIndex = index;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text('Kody QR'),
+        backgroundColor: Colors.transparent,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColorLight),
+        elevation: 0.0,
       ),
+      //leftside menu
+      drawer: Drawer(
+          child: ListView(
+              // Important: Remove any padding from the ListView.
+              padding: EdgeInsets.zero,
+              children: <Widget>[
+            DrawerHeader(
+              //TODO edit the menu
+              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                Container(
+                  padding: const EdgeInsets.only(top: 16, bottom: 16),
+                  alignment: Alignment.bottomLeft,
+                  child: Text("Menu"),
+                ),
+                Spacer(
+                  flex: 2,
+                ),
+                Container(
+                    padding: const EdgeInsets.only(top: 16, bottom: 16),
+                    alignment: Alignment.topRight,
+                    child: CircleAvatar(
+                      radius: 50,
+                      child: user.photoURL != null
+                          ? Image.network(user.photoURL)
+                          : Icon(Icons.person, size: 50),
+                    )),
+              ]),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+              ),
+            ),
+            ListTile(
+              title: Text('Historia wyszukiwania'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Item 2'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ])),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomAppBar(
+          child: Container(
+            color: Theme.of(context).bottomAppBarColor,
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                IconButton(
+                  //update the bottom app bar view each time an item is clicked
+                  onPressed: () {
+                    _onItemTapped(0);
+                  },
+                  iconSize: 30.0,
+                  icon: Icon(
+                    Icons.menu_book,
+                    //darken the icon if it is selected or else give it a different color
+                    color: _selectedIndex == 0
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).secondaryHeaderColor,
+                  ),
+                ),
+                //to leave space in between the bottom app bar items and below the FAB
+                SizedBox(
+                  width: 100.0,
+                ),
+                IconButton(
+                  onPressed: () {
+                    _onItemTapped(1);
+                  },
+                  iconSize: 30.0,
+                  icon: Icon(
+                    Icons.local_movies,
+                    color: _selectedIndex == 1
+                        ? Theme.of(context).primaryColor
+                        : Theme.of(context).secondaryHeaderColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          //to add a space between the FAB and BottomAppBar
+          shape: CircularNotchedRectangle(),
+          //color of the BottomAppBar
+          color: Theme.of(context).bottomAppBarColor),
     );
   }
 }

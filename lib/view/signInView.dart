@@ -32,7 +32,7 @@ class _SignInViewState extends State<SignInView> {
       if (user == null) {
         print('User is currently signed out!');
       } else {
-        Navigator.pushReplacementNamed(context, '/main');
+        Navigator.pushReplacementNamed(context, '/main', arguments: user);
         print('User is signed in!');
       }
     });
@@ -364,7 +364,7 @@ class _SignInFormState extends State<_SignInForm> {
         content: Text('Sign In ${user.uid} with Google'),
       ));
 
-      Navigator.pushReplacementNamed(context, '/main');
+      Navigator.pushReplacementNamed(context, '/main', arguments: user);
     } catch (e) {
       print(e);
       Scaffold.of(context).showSnackBar(
