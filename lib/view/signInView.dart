@@ -80,11 +80,6 @@ class _SignInViewState extends State<SignInView> {
       }),
     );
   }
-
-  // Example code for sign out.
-  Future<void> _signOut() async {
-    await _auth.signOut();
-  }
 }
 
 /*
@@ -364,7 +359,7 @@ class _SignInFormState extends State<_SignInForm> {
         content: Text('Sign In ${user.uid} with Google'),
       ));
 
-      Navigator.pushReplacementNamed(context, '/main', arguments: user);
+      Navigator.pushReplacementNamed(context, '/main');
     } catch (e) {
       print(e);
       Scaffold.of(context).showSnackBar(

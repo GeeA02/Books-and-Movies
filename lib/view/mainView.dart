@@ -29,6 +29,12 @@ class _MainViewState extends State<MainView> {
     });
   }
 
+  // Example code for sign out.
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacementNamed(context, '/signIn');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,17 +75,33 @@ class _MainViewState extends State<MainView> {
               ),
             ),
             ListTile(
-              title: Text('Historia wyszukiwania'),
+              leading: Icon(Icons.menu_book),
+              title: Text('Add book',
+                  style: Theme.of(context).textTheme.bodyText2),
               onTap: () {
+                _onItemTapped(0);
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              title: Text('Item 2'),
+              leading: Icon(Icons.local_movies),
+              title: Text('Add movie',
+                  style: Theme.of(context).textTheme.bodyText2),
               onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
+                _onItemTapped(1);
+                Navigator.pop(context);
+              },
+            ),
+            Divider(
+              height: 1,
+              thickness: 1,
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title:
+                  Text('Logout', style: Theme.of(context).textTheme.bodyText2),
+              onTap: () {
+                _signOut();
                 Navigator.pop(context);
               },
             ),
