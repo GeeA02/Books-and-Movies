@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'moviesView.dart';
 
-/// This is the stateful widget that the main application instantiates.
 class MainView extends StatefulWidget {
   MainView({Key key}) : super(key: key);
 
@@ -12,7 +11,6 @@ class MainView extends StatefulWidget {
   _MainViewState createState() => _MainViewState();
 }
 
-/// This is the private State class that goes with MyStatefulWidget.
 class _MainViewState extends State<MainView> {
   final User user = FirebaseAuth.instance.currentUser;
 
@@ -29,7 +27,6 @@ class _MainViewState extends State<MainView> {
     });
   }
 
-  // Example code for sign out.
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
     Navigator.pushReplacementNamed(context, '/signIn');
@@ -45,67 +42,61 @@ class _MainViewState extends State<MainView> {
       ),
       //leftside menu
       drawer: Drawer(
-          child: ListView(
-              // Important: Remove any padding from the ListView.
-              padding: EdgeInsets.zero,
-              children: <Widget>[
-            DrawerHeader(
-              //TODO edit the menu
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 16, bottom: 16),
-                  alignment: Alignment.bottomLeft,
-                  child: Text("Menu"),
-                ),
-                Spacer(
-                  flex: 2,
-                ),
-                Container(
-                    padding: const EdgeInsets.only(top: 16, bottom: 16),
-                    alignment: Alignment.topRight,
-                    child: CircleAvatar(
-                      radius: 50,
-                      child: user.photoURL != null
-                          ? Image.network(user.photoURL)
-                          : Icon(Icons.person, size: 50),
-                    )),
-              ]),
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-              ),
+          child: ListView(padding: EdgeInsets.zero, children: <Widget>[
+        DrawerHeader(
+          child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+            Container(
+              padding: const EdgeInsets.only(top: 16, bottom: 16),
+              alignment: Alignment.bottomLeft,
+              child: Text("Menu"),
             ),
-            ListTile(
-              leading: Icon(Icons.menu_book),
-              title: Text('Add book',
-                  style: Theme.of(context).textTheme.bodyText2),
-              onTap: () {
-                _onItemTapped(0);
-                Navigator.pop(context);
-              },
+            Spacer(
+              flex: 2,
             ),
-            ListTile(
-              leading: Icon(Icons.local_movies),
-              title: Text('Add movie',
-                  style: Theme.of(context).textTheme.bodyText2),
-              onTap: () {
-                _onItemTapped(1);
-                Navigator.pop(context);
-              },
-            ),
-            Divider(
-              height: 1,
-              thickness: 1,
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title:
-                  Text('Logout', style: Theme.of(context).textTheme.bodyText2),
-              onTap: () {
-                _signOut();
-                Navigator.pop(context);
-              },
-            ),
-          ])),
+            Container(
+                padding: const EdgeInsets.only(top: 16, bottom: 16),
+                alignment: Alignment.topRight,
+                child: CircleAvatar(
+                  radius: 50,
+                  child: user.photoURL != null
+                      ? Image.network(user.photoURL)
+                      : Icon(Icons.person, size: 50),
+                )),
+          ]),
+          decoration: BoxDecoration(
+            color: Theme.of(context).primaryColor,
+          ),
+        ),
+        ListTile(
+          leading: Icon(Icons.menu_book),
+          title: Text('Add book', style: Theme.of(context).textTheme.bodyText2),
+          onTap: () {
+            _onItemTapped(0);
+            Navigator.pop(context);
+          },
+        ),
+        ListTile(
+          leading: Icon(Icons.local_movies),
+          title:
+              Text('Add movie', style: Theme.of(context).textTheme.bodyText2),
+          onTap: () {
+            _onItemTapped(1);
+            Navigator.pop(context);
+          },
+        ),
+        Divider(
+          height: 1,
+          thickness: 1,
+        ),
+        ListTile(
+          leading: Icon(Icons.logout),
+          title: Text('Logout', style: Theme.of(context).textTheme.bodyText2),
+          onTap: () {
+            _signOut();
+            Navigator.pop(context);
+          },
+        ),
+      ])),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
@@ -117,20 +108,17 @@ class _MainViewState extends State<MainView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 IconButton(
-                  //update the bottom app bar view each time an item is clicked
                   onPressed: () {
                     _onItemTapped(0);
                   },
                   iconSize: 30.0,
                   icon: Icon(
                     Icons.menu_book,
-                    //darken the icon if it is selected or else give it a different color
                     color: _selectedIndex == 0
                         ? Theme.of(context).primaryColor
                         : Theme.of(context).secondaryHeaderColor,
                   ),
                 ),
-                //to leave space in between the bottom app bar items and below the FAB
                 SizedBox(
                   width: 100.0,
                 ),
@@ -149,9 +137,6 @@ class _MainViewState extends State<MainView> {
               ],
             ),
           ),
-          //to add a space between the FAB and BottomAppBar
-          shape: CircularNotchedRectangle(),
-          //color of the BottomAppBar
           color: Theme.of(context).bottomAppBarColor),
     );
   }
