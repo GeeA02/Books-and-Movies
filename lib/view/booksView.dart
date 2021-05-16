@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 
 class BooksView extends StatelessWidget {
   BooksView({Key? key}) : super(key: key);
-  final BookRepository bookRepository = BookRepository();
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +31,13 @@ class BooksView extends StatelessWidget {
                   child: SizedBox(
                       height: 200.0,
                       child: FirebaseAnimatedList(
-                          query: bookRepository.getBooks(),
+                          query: BookRepository.getBooks(),
                           itemBuilder: (BuildContext context,
                               DataSnapshot snapshot,
                               Animation<double> animation,
                               int index) {
-                            print(snapshot.value);
-                            return BookCard(Book.fromJson(snapshot.value));
+                            return BookCard(
+                                Book.fromJson(snapshot.value), snapshot.key);
                           }))),
               IconButton(icon: Icon(Icons.ac_unit), onPressed: buttonPressed),
             ]),
@@ -47,6 +46,6 @@ class BooksView extends StatelessWidget {
   }
 
   void buttonPressed() {
-    bookRepository.addBook(Book('name', 'author', true));
+    BookRepository.addBook(Book('name', 'author', true));
   }
 }

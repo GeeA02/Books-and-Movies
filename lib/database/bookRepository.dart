@@ -5,21 +5,24 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class BookRepository {
-  final DatabaseReference _dbReference = Db().reference;
-  final String? uid = FirebaseAuth.instance.currentUser?.uid;
+  static final DatabaseReference _dbReference = Db().reference;
+  static final String? _uid = FirebaseAuth.instance.currentUser?.uid;
 
-
-  Query getBooks() {
-      return _dbReference.child('$uid').child('book');
+  static Query getBooks() {
+    return _dbReference.child('$_uid').child('book');
   }
 
-  void deleteBook(){
-    
+  static void deleteBook(String bookId) {
+    _dbReference.child('$_uid').child('book').child(bookId).remove();
   }
 
-  Future<void> addBook(Book book) async {
+  static void updateBook(Book book, String bookId) {
+    _dbReference.child('$_uid').child('book').child(bookId).set(book.toJson());
+  }
+
+  static Future<void> addBook(Book book) async {
     print(_dbReference.path);
-    _dbReference.child('$uid').child('book').push().set(book.toJson());
+    _dbReference.child('$_uid').child('book').push().set(book.toJson());
     print(_dbReference.path);
   }
 }
