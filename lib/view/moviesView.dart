@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MoviesView extends StatelessWidget {
-  MoviesView({Key key}) : super(key: key);
+  MoviesView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

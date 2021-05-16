@@ -1,8 +1,14 @@
 import 'package:books_and_movies/database/bookRepository.dart';
+import 'package:books_and_movies/model/book.dart';
+import 'package:books_and_movies/view/widget/bookCard.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:firebase_database/firebase_database.dart';
+// ignore: import_of_legacy_library_into_null_safe
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
 class BooksView extends StatelessWidget {
-  BooksView({Key key}) : super(key: key);
+  BooksView({Key? key}) : super(key: key);
   final BookRepository bookRepository = BookRepository();
 
   @override
@@ -19,16 +25,27 @@ class BooksView extends StatelessWidget {
             children: <Widget>[
               new Text(
                 "Books",
-                style: Theme.of(context).textTheme.headline1,
+                style: Theme.of(context).textTheme.headline4,
                 textAlign: TextAlign.center,
               ),
-              IconButton(icon: Icon(Icons.ac_unit), onPressed: buttonPressed)
+              Expanded(
+                  child: SizedBox(
+                      height: 200.0,
+                      child: FirebaseAnimatedList(
+                          query: bookRepository.getBooks(),
+                          itemBuilder: (BuildContext context,
+                              DataSnapshot snapshot,
+                              Animation<double> animation,
+                              int index) {
+                            return BookCard(Book.fromJson(snapshot.value));
+                          }))),
+              IconButton(icon: Icon(Icons.ac_unit), onPressed: buttonPressed),
             ]),
       ),
     )));
   }
 
   void buttonPressed() {
-    bookRepository.AddBook();
+    bookRepository.addBook(Book('name', 'author', true));
   }
 }

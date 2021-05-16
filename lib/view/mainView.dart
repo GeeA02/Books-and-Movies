@@ -5,14 +5,16 @@ import 'package:flutter/material.dart';
 import 'moviesView.dart';
 
 class MainView extends StatefulWidget {
-  MainView({Key key}) : super(key: key);
+  MainView({Key? key}) : super(key: key);
 
   @override
   _MainViewState createState() => _MainViewState();
 }
 
 class _MainViewState extends State<MainView> {
-  final User user = FirebaseAuth.instance.currentUser;
+  final User? user = FirebaseAuth.instance.currentUser != null
+      ? FirebaseAuth.instance.currentUser
+      : null;
 
   int _selectedIndex = 0;
 
@@ -58,8 +60,8 @@ class _MainViewState extends State<MainView> {
                 alignment: Alignment.topRight,
                 child: CircleAvatar(
                   radius: 50,
-                  child: user.photoURL != null
-                      ? Image.network(user.photoURL)
+                  child: user!.photoURL != null
+                      ? Image.network(user!.photoURL!)
                       : Icon(Icons.person, size: 50),
                 )),
           ]),

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// @dart=2.9
+
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -24,8 +24,8 @@ class _SignUpViewState extends State<SignUpView> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  bool _success;
-  String _userEmail = '';
+  bool? _success;
+  String? _userEmail = '';
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +44,8 @@ class _SignUpViewState extends State<SignUpView> {
                   TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(labelText: 'Email'),
-                    validator: (String value) {
-                      if (value.isEmpty) {
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
                         return 'Please enter some text';
                       }
                       return null;
@@ -54,8 +54,8 @@ class _SignUpViewState extends State<SignUpView> {
                   TextFormField(
                     controller: _passwordController,
                     decoration: const InputDecoration(labelText: 'Password'),
-                    validator: (String value) {
-                      if (value.isEmpty) {
+                    validator: (String? value) {
+                      if (value!.isEmpty) {
                         return 'Please enter some text';
                       }
                       return null;
@@ -69,7 +69,7 @@ class _SignUpViewState extends State<SignUpView> {
                       icon: Icons.person_add,
                       backgroundColor: Theme.of(context).primaryColor,
                       onPressed: () async {
-                        if (_formKey.currentState.validate()) {
+                        if (_formKey.currentState!.validate()) {
                           await _register();
                         }
                       },
@@ -80,7 +80,7 @@ class _SignUpViewState extends State<SignUpView> {
                     alignment: Alignment.center,
                     child: Text(_success == null
                         ? ''
-                        : (_success
+                        : (_success!
                             ? 'Successfully registered $_userEmail'
                             : 'Registration failed')),
                   )
@@ -101,7 +101,7 @@ class _SignUpViewState extends State<SignUpView> {
 
   // Example code for registration.
   Future<void> _register() async {
-    final User user = (await _auth.createUserWithEmailAndPassword(
+    final User? user = (await _auth.createUserWithEmailAndPassword(
       email: _emailController.text,
       password: _passwordController.text,
     ))

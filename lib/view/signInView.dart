@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// @dart=2.9
-
 // ignore_for_file: deprecated_member_use
 
 import 'package:flutter/material.dart';
@@ -24,11 +22,11 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
-  User user;
+  User? user;
 
   @override
   void initState() {
-    _auth.authStateChanges().listen((User user) {
+    _auth.authStateChanges().listen((User? user) {
       if (user == null) {
         print('User is currently signed out!');
       } else {
@@ -241,16 +239,16 @@ class _SignInFormState extends State<_SignInForm> {
                   TextFormField(
                     controller: _emailController,
                     decoration: const InputDecoration(labelText: 'Email'),
-                    validator: (String value) {
-                      if (value.isEmpty) return 'Please enter some text';
+                    validator: (String? value) {
+                      if (value!.isEmpty) return 'Please enter some text';
                       return null;
                     },
                   ),
                   TextFormField(
                     controller: _passwordController,
                     decoration: const InputDecoration(labelText: 'Password'),
-                    validator: (String value) {
-                      if (value.isEmpty) return 'Please enter some text';
+                    validator: (String? value) {
+                      if (value!.isEmpty) return 'Please enter some text';
                       return null;
                     },
                     obscureText: true,
@@ -262,7 +260,7 @@ class _SignInFormState extends State<_SignInForm> {
                       Buttons.Email,
                       text: 'Sign In',
                       onPressed: () async {
-                        if (_formKey.currentState.validate()) {
+                        if (_formKey.currentState!.validate()) {
                           await _signInWithEmailAndPassword();
                         }
                       },
@@ -318,7 +316,7 @@ class _SignInFormState extends State<_SignInForm> {
         email: _emailController.text,
         password: _passwordController.text,
       ))
-          .user;
+          .user!;
 
       Scaffold.of(context).showSnackBar(
         SnackBar(
@@ -344,19 +342,23 @@ class _SignInFormState extends State<_SignInForm> {
         var googleProvider = GoogleAuthProvider();
         userCredential = await _auth.signInWithPopup(googleProvider);
       } else {
-        final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
-        final googleAuthCredential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-        userCredential = await _auth.signInWithCredential(googleAuthCredential);
+        final GoogleSignInAccount? googleUser = await (GoogleSignIn().signIn());
+        if (googleUser != null) {
+          final GoogleSignInAuthentication googleAuth =
+              await googleUser.authentication;
+          final googleAuthCredential = GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
+          );
+          userCredential =
+              await _auth.signInWithCredential(googleAuthCredential);
+        } else
+          throw Exception("Something went wrong!");
       }
 
       final user = userCredential.user;
       Scaffold.of(context).showSnackBar(SnackBar(
-        content: Text('Sign In ${user.uid} with Google'),
+        content: Text('Sign In ${user!.uid} with Google'),
       ));
 
       Navigator.pushReplacementNamed(context, '/main');

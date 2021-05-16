@@ -7,7 +7,7 @@ import 'package:books_and_movies/theme/defaultTheme.dart';
 import 'package:books_and_movies/view/mainView.dart';
 
 class App extends StatefulWidget {
-  const App({Key key}) : super(key: key);
+  const App({Key? key}) : super(key: key);
 
   @override
   _AppState createState() => _AppState();
@@ -29,7 +29,7 @@ class _AppState extends State {
       darkTheme: DefaultTheme.darkTheme,
       themeMode: currentTheme.currentTheme,
       //debugShowCheckedModeBanner: false,
-      initialRoute: '/',
+      initialRoute: '/singIn',
       routes: {
         '/': (context) => FirebaseWidget(),
         '/main': (context) => MainView(),

@@ -8,4 +8,15 @@ class Book {
   String toString() {
     return "$name $author";
   }
+
+  Book.fromJson(Map<dynamic, dynamic> json)
+      : name = json['name'],
+        author = json['author'],
+        seen = json['seen'] as bool;
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'author': author,
+        'seen': seen,
+      };
 }
