@@ -13,8 +13,11 @@ class BookRepository {
       return _dbReference.child('$uid').child('book');
   }
 
+  void deleteBook(){
+    
+  }
+
   Future<void> addBook(Book book) async {
-    print("AddBooks");
     print(_dbReference.path);
     _dbReference.child('$uid').child('book').push().set(book.toJson());
     print(_dbReference.path);

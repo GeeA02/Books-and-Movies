@@ -10,7 +10,6 @@ class MovieRepository {
 
   void getMovies() {
     //TODO get users books
-    print("GetBooks");
     try {
       _dbReference
           .child('$uid')
@@ -25,8 +24,6 @@ class MovieRepository {
   }
 
   Future<void> addMovie(Movie movie) async {
-    print("AddBooks");
-    print(_dbReference.path);
     _dbReference.child('$uid').child('movie').push().set(movie.toJson());
     print(_dbReference.path);
   }

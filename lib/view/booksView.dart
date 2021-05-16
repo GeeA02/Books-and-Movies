@@ -37,6 +37,7 @@ class BooksView extends StatelessWidget {
                               DataSnapshot snapshot,
                               Animation<double> animation,
                               int index) {
+                            print(snapshot.value);
                             return BookCard(Book.fromJson(snapshot.value));
                           }))),
               IconButton(icon: Icon(Icons.ac_unit), onPressed: buttonPressed),

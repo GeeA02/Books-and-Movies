@@ -29,7 +29,7 @@ class _AppState extends State {
       darkTheme: DefaultTheme.darkTheme,
       themeMode: currentTheme.currentTheme,
       //debugShowCheckedModeBanner: false,
-      initialRoute: '/singIn',
+      initialRoute: '/',
       routes: {
         '/': (context) => FirebaseWidget(),
         '/main': (context) => MainView(),
