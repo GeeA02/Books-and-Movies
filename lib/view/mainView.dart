@@ -39,7 +39,7 @@ class _MainViewState extends State<MainView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Theme.of(context).primaryColorLight),
+        iconTheme: IconThemeData(color: Theme.of(context).cardColor),
         elevation: 0.0,
       ),
       //leftside menu
@@ -117,7 +117,7 @@ class _MainViewState extends State<MainView> {
                   icon: Icon(
                     Icons.menu_book,
                     color: _selectedIndex == 0
-                        ? Theme.of(context).primaryColor
+                        ? Theme.of(context).cardColor
                         : Theme.of(context).secondaryHeaderColor,
                   ),
                 ),
@@ -132,7 +132,7 @@ class _MainViewState extends State<MainView> {
                   icon: Icon(
                     Icons.local_movies,
                     color: _selectedIndex == 1
-                        ? Theme.of(context).primaryColor
+                        ? Theme.of(context).cardColor
                         : Theme.of(context).secondaryHeaderColor,
                   ),
                 ),
