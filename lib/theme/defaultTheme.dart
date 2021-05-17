@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class DefaultTheme with ChangeNotifier {
   static ThemeData get darkTheme {
     return ThemeData(
-      /*primaryColor: Color(0xFF75a478),
+      primaryColor: Color(0xFF75a478),
       canvasColor: Color(0xFF75a478),
       scaffoldBackgroundColor: Color(0xffa5d6a7),
-      cardColor: Color(0xffa5d6a7),*/
+      cardColor: Color(0xffa5d6a7),
       fontFamily: 'Montserrat',
       textTheme: ThemeData.dark().textTheme.copyWith(
             headline1: ThemeData.dark().textTheme.headline1!.copyWith(
@@ -31,9 +31,9 @@ class DefaultTheme with ChangeNotifier {
 
   static ThemeData get lightTheme {
     return ThemeData(
-      /*primaryColor: Color(0xFF75a478),
+      primaryColor: Color(0xFF75a478),
       canvasColor: Color(0xFF75a478),
-      scaffoldBackgroundColor: Color(0xffa5d6a7),*/
+      scaffoldBackgroundColor: Color(0xffa5d6a7),
       fontFamily: 'Montserrat',
       textTheme: ThemeData.dark().textTheme.copyWith(
             headline1: ThemeData.light().textTheme.headline1!.copyWith(
@@ -49,6 +49,10 @@ class DefaultTheme with ChangeNotifier {
                   fontWeight: FontWeight.bold,
                 ),
             headline5: ThemeData.light().textTheme.headline5!.copyWith(
+                  color: Color(0xFF363640),
+                  fontWeight: FontWeight.bold,
+                ),
+            headline6: ThemeData.light().textTheme.headline6!.copyWith(
                   color: Color(0xFF363640),
                   fontWeight: FontWeight.bold,
                 ),

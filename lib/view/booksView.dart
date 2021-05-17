@@ -1,6 +1,7 @@
 import 'package:books_and_movies/database/bookRepository.dart';
 import 'package:books_and_movies/model/book.dart';
 import 'package:books_and_movies/view/widget/bookCard.dart';
+import 'package:books_and_movies/view/widget/bookForm.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_database/firebase_database.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -39,13 +40,16 @@ class BooksView extends StatelessWidget {
                             return BookCard(
                                 Book.fromJson(snapshot.value), snapshot.key);
                           }))),
-              IconButton(icon: Icon(Icons.ac_unit), onPressed: buttonPressed),
+              IconButton(
+                icon: Icon(Icons.ac_unit),
+                onPressed: () {
+                  showDialog<void>(
+                      context: context,
+                      builder: (context) => BookForm(null, null));
+                },
+              ),
             ]),
       ),
     )));
-  }
-
-  void buttonPressed() {
-    BookRepository.addBook(Book('name', 'author', true));
   }
 }

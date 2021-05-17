@@ -1,12 +1,18 @@
 class Book {
   String name;
-  String author;
+  String? author;
   bool seen;
   Book(this.name, this.author, this.seen);
 
   @override
   String toString() {
     return "$name $author";
+  }
+
+  void update(name, author, seen) {
+    this.name = name;
+    this.author = author;
+    this.seen = seen;
   }
 
   Book.fromJson(Map<dynamic, dynamic> json)
