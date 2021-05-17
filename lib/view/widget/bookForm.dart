@@ -17,7 +17,7 @@ class _BookFormState extends State<BookForm> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController? nameController;
   TextEditingController? authorController;
-  final bool _seen = false;
+  bool _seen = false;
 
   @override
   void initState() {
@@ -27,6 +27,7 @@ class _BookFormState extends State<BookForm> {
       authorController = TextEditingController(
           text: widget._book != null ? widget._book!.author : '');
     });
+    _seen = widget._book != null ? widget._book!.seen : false;
     super.initState();
   }
 
@@ -34,33 +35,41 @@ class _BookFormState extends State<BookForm> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: widget._book == null ? Text('Add Book') : Text('Edit Book'),
-      contentPadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.all(10),
       content: Form(
           key: _formKey,
           child: SingleChildScrollView(
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text("Name:", style: Theme.of(context).textTheme.headline6),
                   Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.only(bottom: 5),
                     child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Name',
+                      ),
                       controller: nameController,
                     ),
                   ),
-                  Text("Author", style: Theme.of(context).textTheme.headline6),
                   Padding(
-                    padding: EdgeInsets.all(10),
+                    padding: EdgeInsets.only(bottom: 5),
                     child: TextFormField(
+                      decoration: const InputDecoration(
+                        labelText: 'Author',
+                      ),
                       controller: authorController,
                     ),
                   ),
-                  Text("Seen?", style: Theme.of(context).textTheme.headline6),
-                  Checkbox(
-                    onChanged: (seen) {},
-                    value: widget._book != null ? widget._book!.seen : _seen,
+                  CheckboxListTile(
+                    title: Text('Seen? '),
+                    onChanged: (bool? seen) {
+                      setState(() {
+                        _seen = seen!;
+                      });
+                    },
+                    value: _seen,
                   )
                 ]),
           )),
@@ -70,10 +79,12 @@ class _BookFormState extends State<BookForm> {
             Navigator.pop(context);
           },
           child: Text('CANCEL'),
+          style: TextButton.styleFrom(primary: Theme.of(context).accentColor),
         ),
         TextButton(
           onPressed: save,
           child: Text('SAVE'),
+          style: TextButton.styleFrom(primary: Theme.of(context).accentColor),
         ),
       ],
     );

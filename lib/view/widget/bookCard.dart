@@ -62,6 +62,8 @@ class _BookCardState extends State<BookCard> {
                             Navigator.pop(context);
                           },
                           child: Text('CANCEL'),
+                          style: TextButton.styleFrom(
+                              primary: Theme.of(context).accentColor),
                         ),
                         TextButton(
                           onPressed: () {
@@ -69,6 +71,8 @@ class _BookCardState extends State<BookCard> {
                             Navigator.pop(context);
                           },
                           child: Text('DELETE'),
+                          style: TextButton.styleFrom(
+                              primary: Theme.of(context).errorColor),
                         ),
                       ],
                     ));
