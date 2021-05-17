@@ -51,6 +51,7 @@ class _BookFormState extends State<BookForm> {
                         labelText: 'Name',
                       ),
                       controller: nameController,
+                      validator: validator,
                     ),
                   ),
                   Padding(
@@ -91,14 +92,15 @@ class _BookFormState extends State<BookForm> {
   }
 
   String? validator(String? text) {
-    if (text == null || text.isEmpty) {
+    print(text);
+    if (text == null || text == '') {
       return 'Please enter some text';
     }
     return null;
   }
 
   void save() {
-    print(authorController);
+    print(authorController!.text);
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Processing Data')));
