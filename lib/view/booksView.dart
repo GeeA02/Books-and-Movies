@@ -19,7 +19,7 @@ class BooksView extends StatelessWidget {
       padding: EdgeInsets.all(30),
       child: Container(
         child: new Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
@@ -30,7 +30,7 @@ class BooksView extends StatelessWidget {
               ),
               Expanded(
                   child: SizedBox(
-                      height: 200.0,
+                      height: 500.0,
                       child: FirebaseAnimatedList(
                           query: BookRepository.getBooks(),
                           itemBuilder: (BuildContext context,
@@ -40,13 +40,18 @@ class BooksView extends StatelessWidget {
                             return BookCard(
                                 Book.fromJson(snapshot.value), snapshot.key);
                           }))),
-              IconButton(
-                icon: Icon(Icons.ac_unit),
+              SizedBox(
+                height: 30,
+              ),
+              FloatingActionButton.extended(
+                foregroundColor: Colors.black,
                 onPressed: () {
                   showDialog<void>(
                       context: context,
                       builder: (context) => BookForm(null, null));
                 },
+                icon: Icon(Icons.add),
+                label: Text('Add'),
               ),
             ]),
       ),
