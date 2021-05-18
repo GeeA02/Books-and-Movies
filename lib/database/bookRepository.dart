@@ -12,6 +12,10 @@ class BookRepository {
     return _dbReference.child('$_uid').child('book');
   }
 
+  static Query searchBooks() {
+    return _dbReference.child('$_uid').child('book');
+  }
+
   static void deleteBook(String bookId) {
     _dbReference.child('$_uid').child('book').child(bookId).remove();
   }
@@ -21,8 +25,6 @@ class BookRepository {
   }
 
   static Future<void> addBook(Book book) async {
-    print(_dbReference.path);
     _dbReference.child('$_uid').child('book').push().set(book.toJson());
-    print(_dbReference.path);
   }
 }

@@ -29,20 +29,20 @@ class BooksView extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               Expanded(
-                  child: SizedBox(
-                      height: 500.0,
-                      child: FirebaseAnimatedList(
-                          defaultChild: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [CircularProgressIndicator()]),
-                          query: BookRepository.getBooks(),
-                          itemBuilder: (BuildContext context,
-                              DataSnapshot snapshot,
-                              Animation<double> animation,
-                              int index) {
-                            return BookCard(
-                                Book.fromJson(snapshot.value), snapshot.key);
-                          }))),
+                child: SizedBox(
+                  height: 500.0,
+                  child: FirebaseAnimatedList(
+                      defaultChild: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [CircularProgressIndicator()]),
+                      query: BookRepository.getBooks(),
+                      itemBuilder: (BuildContext context, DataSnapshot snapshot,
+                          Animation<double> animation, int index) {
+                        return BookCard(
+                            Book.fromJson(snapshot.value), snapshot.key);
+                      }),
+                ),
+              ),
               SizedBox(
                 height: 30,
               ),

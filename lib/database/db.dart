@@ -7,7 +7,12 @@ class Db {
 
   factory Db() => _singleton;
 
-  Db._internal();
+  Db._internal() {
+    _instance.setPersistenceEnabled(true);
+    reference = _instance.reference();
+  }
 
-  final reference = FirebaseDatabase(databaseURL: env['DB_URL']).reference();
+  final _instance = FirebaseDatabase(databaseURL: env['DB_URL']);
+
+  late DatabaseReference reference;
 }
