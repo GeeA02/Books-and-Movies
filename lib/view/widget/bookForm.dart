@@ -3,6 +3,8 @@ import 'package:books_and_movies/model/book.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'deleteForm.dart';
+
 class BookForm extends StatefulWidget {
   final Book? _book;
   final String? _bookId;
@@ -71,10 +73,20 @@ class _BookFormState extends State<BookForm> {
                       });
                     },
                     value: _seen,
-                  )
+                  ),
                 ]),
           )),
       actions: [
+        IconButton(
+          color: Theme.of(context).errorColor,
+          icon: Icon(Icons.delete),
+          onPressed: () {
+            Navigator.pop(context);
+            showDialog<void>(
+                context: context,
+                builder: (context) => DeleteForm(widget._bookId!, 'Book'));
+          },
+        ),
         TextButton(
           onPressed: () {
             Navigator.pop(context);

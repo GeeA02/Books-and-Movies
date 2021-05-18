@@ -5,14 +5,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class MovieRepository {
-  final DatabaseReference _dbReference = Db().reference;
-  final String? uid = FirebaseAuth.instance.currentUser?.uid;
+  static final DatabaseReference _dbReference = Db().reference;
+  static final String? _uid = FirebaseAuth.instance.currentUser?.uid;
 
   void getMovies() {
     //TODO get users books
     try {
       _dbReference
-          .child('$uid')
+          .child('$_uid')
           .child('movie')
           .once()
           .then((DataSnapshot snapshot) {
@@ -23,8 +23,12 @@ class MovieRepository {
     }
   }
 
-  Future<void> addMovie(Movie movie) async {
-    _dbReference.child('$uid').child('movie').push().set(movie.toJson());
+  static void deleteMovie(String movieId) {
+    _dbReference.child('$_uid').child('movie').child(movieId).remove();
+  }
+
+  static Future<void> addMovie(Movie movie) async {
+    _dbReference.child('$_uid').child('movie').push().set(movie.toJson());
     print(_dbReference.path);
   }
 }

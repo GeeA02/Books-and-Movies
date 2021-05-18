@@ -1,4 +1,5 @@
 import 'package:books_and_movies/view/booksView.dart';
+import 'package:books_and_movies/view/widget/bookForm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -41,6 +42,7 @@ class _MainViewState extends State<MainView> {
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: Theme.of(context).cardColor),
         elevation: 0.0,
+        actions: [IconButton(icon: Icon(Icons.search), onPressed: () {})],
       ),
       //leftside menu
       drawer: Drawer(
@@ -75,6 +77,8 @@ class _MainViewState extends State<MainView> {
           onTap: () {
             _onItemTapped(0);
             Navigator.pop(context);
+            showDialog<void>(
+                context: context, builder: (context) => BookForm(null, null));
           },
         ),
         ListTile(

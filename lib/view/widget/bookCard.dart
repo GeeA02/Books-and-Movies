@@ -1,6 +1,7 @@
 import 'package:books_and_movies/database/bookRepository.dart';
 import 'package:books_and_movies/model/book.dart';
 import 'package:books_and_movies/view/widget/bookForm.dart';
+import 'package:books_and_movies/view/widget/deleteForm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -54,28 +55,7 @@ class _BookCardState extends State<BookCard> {
           onLongPress: () {
             showDialog<void>(
                 context: context,
-                builder: (context) => AlertDialog(
-                      content: Text('Delete book?'),
-                      actions: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('CANCEL'),
-                          style: TextButton.styleFrom(
-                              primary: Theme.of(context).accentColor),
-                        ),
-                        TextButton(
-                          onPressed: () {
-                            BookRepository.deleteBook(widget._bookId!);
-                            Navigator.pop(context);
-                          },
-                          child: Text('DELETE'),
-                          style: TextButton.styleFrom(
-                              primary: Theme.of(context).errorColor),
-                        ),
-                      ],
-                    ));
+                builder: (context) => DeleteForm(widget._bookId!, 'Book'));
           },
         ),
       ]),
