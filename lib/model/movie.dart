@@ -11,6 +11,10 @@ class Movie {
     return "$name $director $year";
   }
 
+  bool find(String subtext) {
+    return name.toLowerCase().contains(subtext.toLowerCase());
+  }
+
   void update(name, author, year, seen) {
     this.name = name;
     this.director = author;

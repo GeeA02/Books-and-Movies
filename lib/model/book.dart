@@ -9,6 +9,10 @@ class Book {
     return "$name $author";
   }
 
+  bool find(String subtext) {
+    return name.toLowerCase().contains(subtext.toLowerCase());
+  }
+
   void update(name, author, seen) {
     this.name = name;
     this.author = author;
