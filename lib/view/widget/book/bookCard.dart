@@ -20,7 +20,7 @@ class _BookCardState extends State<BookCard> {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(widget._bookId!),
+      key: UniqueKey(),
       onDismissed: (direction) {
         widget._book.seen = !widget._book.seen;
         BookRepository.updateBook(widget._book, widget._bookId!);

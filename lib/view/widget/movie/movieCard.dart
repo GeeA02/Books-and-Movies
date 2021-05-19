@@ -19,7 +19,7 @@ class _MovieCardState extends State<MovieCard> {
   @override
   Widget build(BuildContext context) {
     return Dismissible(
-      key: Key(widget._movieId!),
+      key: UniqueKey(),
       onDismissed: (direction) {
         widget._movie.seen = !widget._movie.seen;
         MovieRepository.updateMovie(widget._movie, widget._movieId!);

@@ -145,10 +145,12 @@ class _SignInFormState extends State<_SignInForm> {
       Container(
           alignment: Alignment.center,
           child: OutlinedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/signIn/signUp');
-              },
-              child: Text("Sign up"))),
+            onPressed: () {
+              Navigator.pushNamed(context, '/signIn/signUp');
+            },
+            child: Text("Sign up"),
+            style: TextButton.styleFrom(primary: Theme.of(context).accentColor),
+          )),
     ]));
   }
 
