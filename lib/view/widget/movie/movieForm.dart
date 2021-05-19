@@ -1,42 +1,45 @@
-import 'package:books_and_movies/database/bookRepository.dart';
-import 'package:books_and_movies/model/book.dart';
+import 'package:books_and_movies/model/movie.dart';
+import 'package:books_and_movies/database/movieRepository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'deleteForm.dart';
+import '../deleteForm.dart';
 
-class BookForm extends StatefulWidget {
-  final Book? _book;
-  final String? _bookId;
+class MovieForm extends StatefulWidget {
+  final Movie? _movie;
+  final String? _movieId;
 
-  BookForm(this._book, this._bookId);
+  MovieForm(this._movie, this._movieId);
 
   @override
-  _BookFormState createState() => _BookFormState();
+  _MovieFormState createState() => _MovieFormState();
 }
 
-class _BookFormState extends State<BookForm> {
+class _MovieFormState extends State<MovieForm> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController? nameController;
-  TextEditingController? authorController;
+  TextEditingController? directorController;
+  TextEditingController? yearController;
   bool _seen = false;
 
   @override
   void initState() {
     setState(() {
       nameController = TextEditingController(
-          text: widget._book != null ? widget._book!.name : '');
-      authorController = TextEditingController(
-          text: widget._book != null ? widget._book!.author : '');
+          text: widget._movie != null ? widget._movie!.name : '');
+      directorController = TextEditingController(
+          text: widget._movie != null ? widget._movie!.director : '');
+      yearController = TextEditingController(
+          text: widget._movie != null ? widget._movie!.year.toString() : '');
     });
-    _seen = widget._book != null ? widget._book!.seen : false;
+    _seen = widget._movie != null ? widget._movie!.seen : false;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: widget._book == null ? Text('Add Book') : Text('Edit Book'),
+      title: widget._movie == null ? Text('Add Movie') : Text('Edit Movie'),
       contentPadding: EdgeInsets.all(10),
       content: Form(
           key: _formKey,
@@ -50,7 +53,7 @@ class _BookFormState extends State<BookForm> {
                     padding: EdgeInsets.only(bottom: 5),
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        labelText: 'Name',
+                        labelText: 'Name*',
                       ),
                       controller: nameController,
                       validator: validator,
@@ -60,9 +63,20 @@ class _BookFormState extends State<BookForm> {
                     padding: EdgeInsets.only(bottom: 5),
                     child: TextFormField(
                       decoration: const InputDecoration(
-                        labelText: 'Author',
+                        labelText: 'Director',
                       ),
-                      controller: authorController,
+                      controller: directorController,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 5),
+                    child: TextFormField(
+                      keyboardType: TextInputType.number,
+                      maxLength: 4,
+                      decoration: const InputDecoration(
+                        labelText: 'Year',
+                      ),
+                      controller: yearController,
                     ),
                   ),
                   CheckboxListTile(
@@ -77,16 +91,19 @@ class _BookFormState extends State<BookForm> {
                 ]),
           )),
       actions: [
-        IconButton(
-          color: Theme.of(context).errorColor,
-          icon: Icon(Icons.delete),
-          onPressed: () {
-            Navigator.pop(context);
-            showDialog<void>(
-                context: context,
-                builder: (context) => DeleteForm(widget._bookId!, 'Book'));
-          },
-        ),
+        widget._movie != null
+            ? IconButton(
+                color: Theme.of(context).errorColor,
+                icon: Icon(Icons.delete),
+                onPressed: () {
+                  Navigator.pop(context);
+                  showDialog<void>(
+                      context: context,
+                      builder: (context) =>
+                          DeleteForm(widget._movieId!, 'Movie'));
+                },
+              )
+            : Container(),
         TextButton(
           onPressed: () {
             Navigator.pop(context);
@@ -112,18 +129,17 @@ class _BookFormState extends State<BookForm> {
   }
 
   void save() {
-    print(authorController!.text);
     if (_formKey.currentState!.validate()) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Processing Data')));
-      if (widget._book == null) {
-        Book newBook =
-            Book(nameController!.text, authorController!.text, _seen);
-        BookRepository.addBook(newBook);
+      if (widget._movie == null) {
+        Movie newMovie = Movie(nameController!.text, directorController!.text,
+            int.tryParse(yearController!.text), _seen);
+        MovieRepository.addMovie(newMovie);
       } else {
-        widget._book!
-            .update(nameController!.text, authorController!.text, _seen);
-        BookRepository.updateBook(widget._book!, widget._bookId!);
+        widget._movie!.update(nameController!.text, directorController!.text,
+            int.parse(yearController!.text), _seen);
+        MovieRepository.updateMovie(widget._movie!, widget._movieId!);
       }
       Navigator.pop(context);
     }

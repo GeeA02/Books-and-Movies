@@ -5,30 +5,26 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class MovieRepository {
-  static final DatabaseReference _dbReference = Db().reference;
   static final String? _uid = FirebaseAuth.instance.currentUser?.uid;
 
-  void getMovies() {
-    //TODO get users books
-    try {
-      _dbReference
-          .child('$_uid')
-          .child('movie')
-          .once()
-          .then((DataSnapshot snapshot) {
-        print('Connected to second database and read ${snapshot.value}');
-      });
-    } catch (e) {
-      print(e);
-    }
+  static Query getMovies() {
+    return Db().reference.child('$_uid').child('movie');
   }
 
   static void deleteMovie(String movieId) {
-    _dbReference.child('$_uid').child('movie').child(movieId).remove();
+    Db().reference.child('$_uid').child('movie').child(movieId).remove();
+  }
+
+  static void updateMovie(Movie movie, String movieId) {
+    Db()
+        .reference
+        .child('$_uid')
+        .child('movie')
+        .child(movieId)
+        .set(movie.toJson());
   }
 
   static Future<void> addMovie(Movie movie) async {
-    _dbReference.child('$_uid').child('movie').push().set(movie.toJson());
-    print(_dbReference.path);
+    Db().reference.child('$_uid').child('movie').push().set(movie.toJson());
   }
 }

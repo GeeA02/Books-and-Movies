@@ -1,15 +1,13 @@
-import 'package:books_and_movies/database/bookRepository.dart';
-import 'package:books_and_movies/model/book.dart';
-import 'package:books_and_movies/view/widget/book/bookCard.dart';
-import 'package:books_and_movies/view/widget/book/bookForm.dart';
-// ignore: import_of_legacy_library_into_null_safe
+import 'package:books_and_movies/database/movieRepository.dart';
+import 'package:books_and_movies/model/movie.dart';
+import 'package:books_and_movies/view/widget/movie/movieCard.dart';
+import 'package:books_and_movies/view/widget/movie/movieForm.dart';
 import 'package:firebase_database/firebase_database.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 
-class BooksView extends StatelessWidget {
-  BooksView({Key? key}) : super(key: key);
+class MoviesView extends StatelessWidget {
+  MoviesView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +22,7 @@ class BooksView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               new Text(
-                "Books",
+                "Movies",
                 style: Theme.of(context).textTheme.headline4,
                 textAlign: TextAlign.center,
               ),
@@ -35,11 +33,11 @@ class BooksView extends StatelessWidget {
                       defaultChild: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [CircularProgressIndicator()]),
-                      query: BookRepository.getBooks(),
+                      query: MovieRepository.getMovies(),
                       itemBuilder: (BuildContext context, DataSnapshot snapshot,
                           Animation<double> animation, int index) {
-                        return BookCard(
-                            Book.fromJson(snapshot.value), snapshot.key);
+                        return MovieCard(
+                            Movie.fromJson(snapshot.value), snapshot.key);
                       }),
                 ),
               ),
@@ -51,7 +49,7 @@ class BooksView extends StatelessWidget {
                 onPressed: () {
                   showDialog<void>(
                     context: context,
-                    builder: (context) => BookForm(null, null),
+                    builder: (context) => MovieForm(null, null),
                   );
                 },
                 icon: Icon(Icons.add),

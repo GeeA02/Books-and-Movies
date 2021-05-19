@@ -1,9 +1,11 @@
 import 'package:books_and_movies/view/booksView.dart';
-import 'package:books_and_movies/view/widget/bookForm.dart';
+import 'package:books_and_movies/view/widget/book/bookForm.dart';
+import 'package:books_and_movies/view/widget/customSearchDelegate.dart';
+import 'package:books_and_movies/view/widget/movie/movieForm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'moviesView.dart';
+import 'movieView.dart';
 
 class MainView extends StatefulWidget {
   MainView({Key? key}) : super(key: key);
@@ -42,7 +44,17 @@ class _MainViewState extends State<MainView> {
         backgroundColor: Colors.transparent,
         iconTheme: IconThemeData(color: Theme.of(context).cardColor),
         elevation: 0.0,
-        actions: [IconButton(icon: Icon(Icons.search), onPressed: () {})],
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {
+              showSearch(
+                context: context,
+                delegate: CustomSearchDelegate(),
+              );
+            },
+          ),
+        ],
       ),
       //leftside menu
       drawer: Drawer(
@@ -88,6 +100,8 @@ class _MainViewState extends State<MainView> {
           onTap: () {
             _onItemTapped(1);
             Navigator.pop(context);
+            showDialog<void>(
+                context: context, builder: (context) => MovieForm(null, null));
           },
         ),
         Divider(

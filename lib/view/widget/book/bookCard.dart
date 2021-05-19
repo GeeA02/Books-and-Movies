@@ -1,6 +1,6 @@
 import 'package:books_and_movies/database/bookRepository.dart';
 import 'package:books_and_movies/model/book.dart';
-import 'package:books_and_movies/view/widget/bookForm.dart';
+import 'package:books_and_movies/view/widget/book/bookForm.dart';
 import 'package:books_and_movies/view/widget/deleteForm.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
