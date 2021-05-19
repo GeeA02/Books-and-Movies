@@ -16,17 +16,20 @@ class BooksView extends StatelessWidget {
     return Scaffold(
         body: Center(
             child: Padding(
-      padding: EdgeInsets.all(30),
+      padding: EdgeInsets.fromLTRB(30, 0, 30, 15),
       child: Container(
         child: new Column(
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              new Text(
-                "Books",
-                style: Theme.of(context).textTheme.headline4,
-                textAlign: TextAlign.center,
+              Padding(
+                padding: EdgeInsets.only(bottom: 20),
+                child: new Text(
+                  "Books",
+                  style: Theme.of(context).textTheme.headline4,
+                  textAlign: TextAlign.center,
+                ),
               ),
               Expanded(
                 child: SizedBox(
