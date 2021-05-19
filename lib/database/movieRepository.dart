@@ -5,26 +5,38 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class MovieRepository {
-  static final String? _uid = FirebaseAuth.instance.currentUser?.uid;
-
   static Query getMovies() {
-    return Db().reference.child('$_uid').child('movie');
+    return Db()
+        .reference
+        .child('${FirebaseAuth.instance.currentUser?.uid}')
+        .child('movie')
+        .orderByChild('seen');
   }
 
   static void deleteMovie(String movieId) {
-    Db().reference.child('$_uid').child('movie').child(movieId).remove();
+    Db()
+        .reference
+        .child('${FirebaseAuth.instance.currentUser?.uid}')
+        .child('movie')
+        .child(movieId)
+        .remove();
   }
 
   static void updateMovie(Movie movie, String movieId) {
     Db()
         .reference
-        .child('$_uid')
+        .child('${FirebaseAuth.instance.currentUser?.uid}')
         .child('movie')
         .child(movieId)
         .set(movie.toJson());
   }
 
   static Future<void> addMovie(Movie movie) async {
-    Db().reference.child('$_uid').child('movie').push().set(movie.toJson());
+    Db()
+        .reference
+        .child('${FirebaseAuth.instance.currentUser?.uid}')
+        .child('movie')
+        .push()
+        .set(movie.toJson());
   }
 }

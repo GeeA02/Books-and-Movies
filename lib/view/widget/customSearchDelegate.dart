@@ -57,10 +57,12 @@ class CustomSearchDelegate extends SearchDelegate {
       );
     }
 
-    return Column(children: [
-      ...findBooks(query),
-      ...findMovies(query),
-    ]);
+    return Padding(
+        padding: EdgeInsets.all(15),
+        child: Column(children: [
+          ...findBooks(query),
+          ...findMovies(query),
+        ]));
   }
 
   @override
@@ -74,7 +76,11 @@ class CustomSearchDelegate extends SearchDelegate {
       Book tmpBook = Book.fromJson(value);
       if (tmpBook.find(query)) cards.add(BookCard(tmpBook, key));
     });
-    if (cards.isEmpty) cards.add(Text('There is no book like \'$query\''));
+    if (cards.isEmpty)
+      cards.add(Text('There is no book like \'$query\''));
+    else
+      cards.insert(0, Text('Results in books'));
+
     return cards;
   }
 
@@ -84,7 +90,10 @@ class CustomSearchDelegate extends SearchDelegate {
       Movie tmpMovie = Movie.fromJson(value);
       if (tmpMovie.find(query)) cards.add(MovieCard(tmpMovie, key));
     });
-    if (cards.isEmpty) cards.add(Text('There is no movie like \'$query\''));
+    if (cards.isEmpty)
+      cards.add(Text('There is no movie like \'$query\''));
+    else
+      cards.insert(0, Text('Results in movies'));
     return cards;
   }
 }

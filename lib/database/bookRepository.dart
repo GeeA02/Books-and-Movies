@@ -5,26 +5,39 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class BookRepository {
-  static final String? _uid = FirebaseAuth.instance.currentUser?.uid;
-
   static Query getBooks() {
-    return Db().reference.child('$_uid').child('book');
+    return Db()
+        .reference
+        .child('${FirebaseAuth.instance.currentUser?.uid}')
+        .child('book')
+        .orderByChild('seen');
+    
   }
 
   static void deleteBook(String bookId) {
-    Db().reference.child('$_uid').child('book').child(bookId).remove();
+    Db()
+        .reference
+        .child('${FirebaseAuth.instance.currentUser?.uid}')
+        .child('book')
+        .child(bookId)
+        .remove();
   }
 
   static void updateBook(Book book, String bookId) {
     Db()
         .reference
-        .child('$_uid')
+        .child('${FirebaseAuth.instance.currentUser?.uid}')
         .child('book')
         .child(bookId)
         .set(book.toJson());
   }
 
   static Future<void> addBook(Book book) async {
-    Db().reference.child('$_uid').child('book').push().set(book.toJson());
+    Db()
+        .reference
+        .child('${FirebaseAuth.instance.currentUser?.uid}')
+        .child('book')
+        .push()
+        .set(book.toJson());
   }
 }

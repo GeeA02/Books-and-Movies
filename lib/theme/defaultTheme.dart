@@ -25,6 +25,10 @@ class DefaultTheme with ChangeNotifier {
             headline5: ThemeData.dark().textTheme.headline5!.copyWith(
                   color: Color(0xFF363640),
                 ),
+            headline6: ThemeData.dark().textTheme.headline6!.copyWith(
+                  color: Color(0xFF101010),
+                  fontWeight: FontWeight.w400,
+                ),
             bodyText2: ThemeData.dark().textTheme.bodyText2!.copyWith(
                   color: Color(0xFF363640),
                 ),
@@ -41,7 +45,7 @@ class DefaultTheme with ChangeNotifier {
       canvasColor: Color(0xFF75a478),
       scaffoldBackgroundColor: Color(0xffa5d6a7),
       fontFamily: 'Montserrat',
-      textTheme: ThemeData.dark().textTheme.copyWith(
+      textTheme: ThemeData.light().textTheme.copyWith(
             headline1: ThemeData.light().textTheme.headline1!.copyWith(
                   color: Color(0xFF363640),
                   fontWeight: FontWeight.bold,

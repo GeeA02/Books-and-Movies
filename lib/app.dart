@@ -28,7 +28,7 @@ class _AppState extends State {
       theme: DefaultTheme.lightTheme,
       darkTheme: DefaultTheme.darkTheme,
       themeMode: currentTheme.currentTheme,
-      //debugShowCheckedModeBanner: false,
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => FirebaseWidget(),

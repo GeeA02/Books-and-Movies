@@ -66,7 +66,7 @@ class _BookFormState extends State<BookForm> {
                     ),
                   ),
                   CheckboxListTile(
-                    title: Text('Seen? '),
+                    title: Text('Read?'),
                     onChanged: (bool? seen) {
                       setState(() {
                         _seen = seen!;
