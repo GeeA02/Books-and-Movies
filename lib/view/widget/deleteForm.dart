@@ -1,6 +1,5 @@
 import 'package:books_and_movies/database/bookRepository.dart';
 import 'package:books_and_movies/database/movieRepository.dart';
-import 'package:books_and_movies/model/book.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

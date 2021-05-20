@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-//TODO change theme properties
 class DefaultTheme with ChangeNotifier {
   static ThemeData get darkTheme {
     return ThemeData(

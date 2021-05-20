@@ -17,7 +17,6 @@ class _FirebaseWidgetState extends State<FirebaseWidget> {
       future: _initialization,
       builder: (context, snapshot) {
         if (snapshot.hasError) {
-          //TODO error widget
           return Text("error");
         }
 
